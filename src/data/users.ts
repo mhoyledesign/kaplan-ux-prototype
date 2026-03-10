@@ -1,0 +1,133 @@
+export interface PortalUser {
+  id: number
+  name: string
+  email: string
+  role: 'Agent Owner' | 'Employee' | 'Admin'
+  terminals: string[]
+  status: 'Active' | 'Disabled'
+  lastLogin: string
+  canViewStatements: boolean
+}
+
+export const portalUsers: PortalUser[] = [
+  {
+    id: 1,
+    name: 'Robert Kaplan',
+    email: 'rkaplan@kaplantrucking.com',
+    role: 'Admin',
+    terminals: ['CLE-01', 'AKR-01', 'PIT-01', 'COL-01', 'WHL-01', 'CAN-01', 'IND-01', 'YNG-01'],
+    status: 'Active',
+    lastLogin: '2026-03-04T08:15:00',
+    canViewStatements: true,
+  },
+  {
+    id: 2,
+    name: 'Rachel Semple',
+    email: 'rsemple@kaplantrucking.com',
+    role: 'Admin',
+    terminals: ['CLE-01', 'AKR-01', 'PIT-01', 'COL-01', 'WHL-01', 'CAN-01', 'IND-01', 'YNG-01'],
+    status: 'Active',
+    lastLogin: '2026-03-04T09:02:00',
+    canViewStatements: true,
+  },
+  {
+    id: 3,
+    name: 'Nathan Graff',
+    email: 'ngraff@kaplantrucking.com',
+    role: 'Admin',
+    terminals: ['CLE-01', 'AKR-01', 'PIT-01', 'COL-01', 'WHL-01', 'CAN-01', 'IND-01', 'YNG-01'],
+    status: 'Active',
+    lastLogin: '2026-03-03T16:30:00',
+    canViewStatements: false,
+  },
+  {
+    id: 4,
+    name: 'Bill Hargrove',
+    email: 'bhargrove@kaplanagent.com',
+    role: 'Agent Owner',
+    terminals: ['CLE-01', 'AKR-01'],
+    status: 'Active',
+    lastLogin: '2026-03-03T14:20:00',
+    canViewStatements: true,
+  },
+  {
+    id: 5,
+    name: 'Diane Phelps',
+    email: 'dphelps@phelpsfreight.com',
+    role: 'Agent Owner',
+    terminals: ['PIT-01', 'WHL-01'],
+    status: 'Active',
+    lastLogin: '2026-03-02T11:45:00',
+    canViewStatements: true,
+  },
+  {
+    id: 6,
+    name: 'Maria Santos',
+    email: 'msantos@santoslogistics.com',
+    role: 'Agent Owner',
+    terminals: ['IND-01', 'COL-01'],
+    status: 'Active',
+    lastLogin: '2026-03-01T09:10:00',
+    canViewStatements: true,
+  },
+  {
+    id: 7,
+    name: 'Greg Vanover',
+    email: 'gvanover@vanovertransport.com',
+    role: 'Agent Owner',
+    terminals: ['CAN-01', 'YNG-01'],
+    status: 'Active',
+    lastLogin: '2026-02-28T13:55:00',
+    canViewStatements: true,
+  },
+  {
+    id: 8,
+    name: 'Jason Mercer',
+    email: 'jmercer@bhargroveagent.com',
+    role: 'Employee',
+    terminals: ['CLE-01'],
+    status: 'Active',
+    lastLogin: '2026-03-04T07:50:00',
+    canViewStatements: false,
+  },
+  {
+    id: 9,
+    name: 'Kevin Stahl',
+    email: 'kstahl@phelpsfreight.com',
+    role: 'Employee',
+    terminals: ['PIT-01'],
+    status: 'Active',
+    lastLogin: '2026-03-02T10:35:00',
+    canViewStatements: false,
+  },
+  {
+    id: 10,
+    name: 'Tammy Bristow',
+    email: 'tbristow@santoslogistics.com',
+    role: 'Employee',
+    terminals: ['IND-01'],
+    status: 'Active',
+    lastLogin: '2026-02-27T15:20:00',
+    canViewStatements: false,
+  },
+  {
+    id: 11,
+    name: 'Carl Whitmore',
+    email: 'cwhitmore@whitmorehaul.com',
+    role: 'Agent Owner',
+    terminals: ['CLE-01', 'CAN-01'],
+    status: 'Disabled',
+    lastLogin: '2026-02-15T10:00:00',
+    canViewStatements: true,
+  },
+  {
+    id: 12,
+    name: 'Frank Olesky',
+    email: 'folesky@oleskytruck.com',
+    role: 'Agent Owner',
+    terminals: ['YNG-01'],
+    status: 'Disabled',
+    lastLogin: '2026-02-10T08:30:00',
+    canViewStatements: true,
+  },
+]
