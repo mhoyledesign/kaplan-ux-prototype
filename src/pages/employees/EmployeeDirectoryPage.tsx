@@ -11,7 +11,7 @@ const employees = [
   { id: 3, firstName: 'Kristen', lastName: 'Hayes', title: 'HR & Communications Director', department: 'HR', terminal: 'CLE-01', phone: '(216) 555-0103', email: 'khayes@kaplantruck.com' },
   { id: 4, firstName: 'Steve', lastName: 'Anderson', title: 'IT Services Manager', department: 'IT', terminal: 'CLE-01', phone: '(216) 555-0104', email: 'sanderson@kaplantruck.com' },
   { id: 5, firstName: 'Adam', lastName: 'Petrov', title: 'Tech Services Specialist', department: 'IT', terminal: 'CLE-01', phone: '(216) 555-0105', email: 'apetrov@kaplantruck.com' },
-  { id: 6, firstName: 'Sean', lastName: 'O\'Brien', title: 'Development Manager', department: 'IT', terminal: 'CLE-01', phone: '(216) 555-0106', email: 'sobrien@kaplantruck.com' },
+  { id: 6, firstName: 'Shawn', lastName: 'Cope', title: 'Development Manager', department: 'IT', terminal: 'CLE-01', phone: '(216) 555-0106', email: 'scope@kaplantruck.com' },
   { id: 7, firstName: 'Maria', lastName: 'Gonzalez', title: 'Safety Director', department: 'Safety', terminal: 'CLE-01', phone: '(216) 555-0107', email: 'mgonzalez@kaplantruck.com' },
   { id: 8, firstName: 'Robert', lastName: 'Williams', title: 'Operations Manager', department: 'Operations', terminal: 'CLE-01', phone: '(216) 555-0108', email: 'rwilliams@kaplantruck.com' },
   { id: 9, firstName: 'Jennifer', lastName: 'Park', title: 'Settlements Supervisor', department: 'Settlements', terminal: 'CLE-01', phone: '(216) 555-0109', email: 'jpark@kaplantruck.com' },
