@@ -226,7 +226,7 @@ export function DashboardPage() {
           const Icon = item.icon
           const inner = (
             <div
-              className="p-4 rounded-lg bg-card border border-border hover:border-[var(--brand-primary)]/30 transition-colors cursor-pointer"
+              className="h-full p-4 rounded-lg bg-card border border-border hover:border-[var(--brand-primary)]/30 transition-colors cursor-pointer"
               style={{ boxShadow: 'var(--shadow-2)' }}
             >
               <div
@@ -241,10 +241,10 @@ export function DashboardPage() {
           )
 
           if ('to' in item && item.to) {
-            return <Link key={item.label} to={item.to}>{inner}</Link>
+            return <Link key={item.label} to={item.to} className="flex">{inner}</Link>
           }
           return (
-            <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer">
+            <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="flex">
               {inner}
             </a>
           )
