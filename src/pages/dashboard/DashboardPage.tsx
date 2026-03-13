@@ -241,10 +241,10 @@ export function DashboardPage() {
           )
 
           if ('to' in item && item.to) {
-            return <Link key={item.label} to={item.to} className="flex">{inner}</Link>
+            return <Link key={item.label} to={item.to} className="block h-full">{inner}</Link>
           }
           return (
-            <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="flex">
+            <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="block h-full">
               {inner}
             </a>
           )
