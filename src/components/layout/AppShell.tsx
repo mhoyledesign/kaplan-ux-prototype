@@ -19,7 +19,7 @@ export function AppShell({ user, onLogout, onSetRole, showNotes, onToggleNotes }
 
   const handleLogout = () => {
     onLogout()
-    navigate('/login')
+    navigate('/sign-in')
   }
 
   return (

@@ -11,16 +11,16 @@ interface OutletCtx { showNotes: boolean; user: AuthUser }
 const tabs = ['User Management', 'Activity Log']
 
 const mockUsers = [
-  { id: 1, name: 'Robert Mitchell', email: 'rmitchell@example.com', role: 'Agent (Owner)', terminals: ['CLE-01', 'CLE-02', 'AKR-01'], status: 'Active', lastLogin: '2026-03-04 08:32 AM' },
-  { id: 2, name: 'Sarah Johnson', email: 'sjohnson@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-03 02:15 PM' },
-  { id: 3, name: 'Mike Chen', email: 'mchen@example.com', role: 'Agent (Owner)', terminals: ['PIT-01'], status: 'Active', lastLogin: '2026-03-04 09:10 AM' },
-  { id: 4, name: 'Linda Torres', email: 'ltorres@example.com', role: 'Agent (Owner)', terminals: ['COL-01', 'CIN-01'], status: 'Active', lastLogin: '2026-02-28 11:45 AM' },
-  { id: 5, name: 'James Brown', email: 'jbrown@example.com', role: 'Agent (Employee)', terminals: ['PIT-01'], status: 'Disabled', lastLogin: '2026-01-15 03:20 PM' },
-  { id: 6, name: 'Angela Wright', email: 'awright@example.com', role: 'Agent (Owner)', terminals: ['IND-01'], status: 'Active', lastLogin: '2026-03-03 07:55 AM' },
-  { id: 7, name: 'Patricia Davis', email: 'pdavis@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-01 10:30 AM' },
-  { id: 8, name: 'Kevin Park', email: 'kpark@example.com', role: 'Agent (Owner)', terminals: ['TOL-01', 'WHL-01'], status: 'Active', lastLogin: '2026-03-04 06:48 AM' },
-  { id: 9, name: 'Dennis Hall', email: 'dhall@example.com', role: 'Agent (Employee)', terminals: ['AKR-01'], status: 'Disabled', lastLogin: '2025-12-20 04:10 PM' },
-  { id: 10, name: 'JD Morrison', email: 'jd@kaplantruck.com', role: 'Admin', terminals: ['ALL'], status: 'Active', lastLogin: '2026-03-04 09:00 AM' },
+  { id: 1, name: 'Robert Mitchell', email: 'rmitchell@example.com', role: 'Agent (Owner)', terminals: ['CLE-01', 'CLE-02', 'AKR-01'], status: 'Active', lastSignIn: '2026-03-04 08:32 AM' },
+  { id: 2, name: 'Sarah Johnson', email: 'sjohnson@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastSignIn: '2026-03-03 02:15 PM' },
+  { id: 3, name: 'Mike Chen', email: 'mchen@example.com', role: 'Agent (Owner)', terminals: ['PIT-01'], status: 'Active', lastSignIn: '2026-03-04 09:10 AM' },
+  { id: 4, name: 'Linda Torres', email: 'ltorres@example.com', role: 'Agent (Owner)', terminals: ['COL-01', 'CIN-01'], status: 'Active', lastSignIn: '2026-02-28 11:45 AM' },
+  { id: 5, name: 'James Brown', email: 'jbrown@example.com', role: 'Agent (Employee)', terminals: ['PIT-01'], status: 'Disabled', lastSignIn: '2026-01-15 03:20 PM' },
+  { id: 6, name: 'Angela Wright', email: 'awright@example.com', role: 'Agent (Owner)', terminals: ['IND-01'], status: 'Active', lastSignIn: '2026-03-03 07:55 AM' },
+  { id: 7, name: 'Patricia Davis', email: 'pdavis@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastSignIn: '2026-03-01 10:30 AM' },
+  { id: 8, name: 'Kevin Park', email: 'kpark@example.com', role: 'Agent (Owner)', terminals: ['TOL-01', 'WHL-01'], status: 'Active', lastSignIn: '2026-03-04 06:48 AM' },
+  { id: 9, name: 'Dennis Hall', email: 'dhall@example.com', role: 'Agent (Employee)', terminals: ['AKR-01'], status: 'Disabled', lastSignIn: '2025-12-20 04:10 PM' },
+  { id: 10, name: 'JD Morrison', email: 'jd@kaplantruck.com', role: 'Admin', terminals: ['ALL'], status: 'Active', lastSignIn: '2026-03-04 09:00 AM' },
 ]
 
 const activityLog = [
@@ -148,7 +148,7 @@ export function AdminPage() {
                     <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Role</th>
                     <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Terminals</th>
                     <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Status</th>
-                    <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Last Login</th>
+                    <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Last Sign In</th>
                     <th className="text-right px-4 py-3 font-semibold text-xs uppercase tracking-wider text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
@@ -184,7 +184,7 @@ export function AdminPage() {
                           {u.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-muted-foreground">{u.lastLogin}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground">{u.lastSignIn}</td>
                       <td className="px-4 py-3 text-right">
                         <button className="p-1.5 rounded-md hover:bg-muted transition-colors cursor-pointer">
                           <MoreHorizontal size={16} className="text-muted-foreground" />

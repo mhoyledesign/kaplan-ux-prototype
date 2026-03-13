@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { BrandProvider } from './theme/BrandContext'
 import { useAuth } from './hooks/useAuth'
 import { AppShell } from './components/layout/AppShell'
-import { LoginPage } from './pages/auth/LoginPage'
+import { SignInPage } from './pages/auth/SignInPage'
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage'
 import { ResetPasswordPage } from './pages/auth/ResetPasswordPage'
 import { ResetSuccessPage } from './pages/auth/ResetSuccessPage'
@@ -21,19 +21,19 @@ import { FeedbackPage } from './pages/tools/FeedbackPage'
 import { AdminPage } from './pages/admin/AdminPage'
 
 export default function App() {
-  const { user, login, logout, setRole } = useAuth()
+  const { user, signIn, logout, setRole } = useAuth()
   const [showNotes, setShowNotes] = useState(false)
 
-  const handleLogin = useCallback(() => {
-    login()
-  }, [login])
+  const handleSignIn = useCallback(() => {
+    signIn()
+  }, [signIn])
 
   return (
     <BrandProvider>
       <BrowserRouter>
         <Routes>
           {/* Auth routes - no shell */}
-          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/sign-in" element={<SignInPage onSignIn={handleSignIn} />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/reset-success" element={<ResetSuccessPage />} />
@@ -66,7 +66,7 @@ export default function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           ) : (
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/sign-in" replace />} />
           )}
         </Routes>
       </BrowserRouter>

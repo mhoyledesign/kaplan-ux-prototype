@@ -26,7 +26,7 @@ export function ResetSuccessPage() {
             Your password has been successfully updated. You can now sign in with your new password.
           </p>
           <Link
-            to="/login"
+            to="/sign-in"
             className="block w-full py-2.5 rounded-md text-white text-sm font-semibold text-center"
             style={{ backgroundColor: 'var(--brand-primary)' }}
           >

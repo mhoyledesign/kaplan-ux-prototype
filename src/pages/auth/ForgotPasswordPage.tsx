@@ -46,7 +46,7 @@ export function ForgotPasswordPage() {
               >
                 Continue to Reset (Demo)
               </Link>
-              <Link to="/login" className="block mt-4 text-sm text-[var(--brand-primary)] hover:underline">
+              <Link to="/sign-in" className="block mt-4 text-sm text-[var(--brand-primary)] hover:underline">
                 Back to Sign In
               </Link>
             </div>
@@ -77,7 +77,7 @@ export function ForgotPasswordPage() {
               >
                 {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
-              <Link to="/login" className="flex items-center justify-center gap-1.5 mt-4 text-sm text-[var(--brand-primary)] hover:underline">
+              <Link to="/sign-in" className="flex items-center justify-center gap-1.5 mt-4 text-sm text-[var(--brand-primary)] hover:underline">
                 <ArrowLeft size={14} /> Back to Sign In
               </Link>
             </form>

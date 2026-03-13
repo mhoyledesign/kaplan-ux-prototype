@@ -3,11 +3,11 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, User, Lock } from 'lucide-react'
 import { useBrand } from '@/theme/BrandContext'
 
-interface LoginPageProps {
-  onLogin: () => void
+interface SignInPageProps {
+  onSignIn: () => void
 }
 
-export function LoginPage({ onLogin }: LoginPageProps) {
+export function SignInPage({ onSignIn }: SignInPageProps) {
   const { brand } = useBrand()
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
@@ -19,7 +19,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
-      onLogin()
+      onSignIn()
       navigate('/')
     }, 800)
   }
@@ -42,7 +42,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           </div>
         </div>
 
-        {/* Login form */}
+        {/* Sign in form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-b-lg px-6 py-8">
           <div className="mb-4">
             <label className="block text-sm font-medium text-foreground mb-1">Username</label>

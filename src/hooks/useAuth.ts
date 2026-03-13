@@ -48,7 +48,7 @@ export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [role, setRoleState] = useState<UserRole>('agent_owner')
 
-  const login = useCallback(() => {
+  const signIn = useCallback(() => {
     setUser(mockUsers[role])
   }, [role])
 
@@ -61,5 +61,5 @@ export function useAuth() {
     setUser(mockUsers[r])
   }, [])
 
-  return { user, role, login, logout, setRole, isAdmin: user?.role === 'admin' }
+  return { user, role, signIn, logout, setRole, isAdmin: user?.role === 'admin' }
 }
