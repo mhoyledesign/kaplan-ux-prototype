@@ -1,6 +1,10 @@
 import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import { Search, MapPin, Phone, FileText, ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import type { AuthUser } from '@/hooks/useAuth'
+
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const regions = ['All Regions', 'Northeast', 'Southeast', 'Midwest', 'Southwest', 'West']
 
@@ -23,6 +27,7 @@ const locations = [
 ]
 
 export function EquipmentUnloadingPage() {
+  const { showNotes } = useOutletContext<OutletCtx>()
   const [region, setRegion] = useState('All Regions')
   const [search, setSearch] = useState('')
 
@@ -35,7 +40,7 @@ export function EquipmentUnloadingPage() {
   return (
     <div className="max-w-5xl">
       <Link to="/tools" className="flex items-center gap-1.5 text-sm mb-4 hover:underline" style={{ color: 'var(--brand-primary)' }}>
-        <ArrowLeft size={14} /> Back to Tools
+        <ArrowLeft size={14} /> Back to Tools & Resources
       </Link>
 
       <h1 className="text-2xl font-semibold mb-1">Equipment Unloading Locations</h1>
@@ -67,7 +72,7 @@ export function EquipmentUnloadingPage() {
 
       <div className="text-xs text-muted-foreground mb-3">{filtered.length} location{filtered.length !== 1 ? 's' : ''} found</div>
 
-      <div className="space-y-3">
+      <div className={`space-y-3 ${showNotes ? 'notes-indicator' : ''}`}>
         {filtered.map((loc) => (
           <div
             key={loc.id}
@@ -82,7 +87,7 @@ export function EquipmentUnloadingPage() {
                   <span>{loc.address}, {loc.city}, {loc.state}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2 shrink-0 flex-wrap">
                 <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-secondary">{loc.terminalCode}</span>
                 <span
                   className="text-[10px] font-semibold px-2 py-0.5 rounded-full"

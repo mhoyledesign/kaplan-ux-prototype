@@ -1,5 +1,9 @@
 import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import { Search, MapPin, Phone, Mail, Clock, ExternalLink } from 'lucide-react'
+import type { AuthUser } from '@/hooks/useAuth'
+
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const terminals = [
   { id: 1, code: 'CLE-01', name: 'Cleveland Main Terminal', address: '4500 Industrial Pkwy', city: 'Cleveland', state: 'OH', zip: '44135', phone: '(216) 555-0100', manager: 'Tom Bradley', email: 'cleveland@kaplantruck.com', hours: 'Mon–Fri 6:00 AM – 6:00 PM' },
@@ -13,6 +17,7 @@ const terminals = [
 ]
 
 export function TerminalListPage() {
+  const { showNotes } = useOutletContext<OutletCtx>()
   const [search, setSearch] = useState('')
 
   const filtered = terminals.filter((t) =>
@@ -39,7 +44,7 @@ export function TerminalListPage() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${showNotes ? 'notes-indicator' : ''}`}>
         {filtered.map((t) => (
           <div
             key={t.id}

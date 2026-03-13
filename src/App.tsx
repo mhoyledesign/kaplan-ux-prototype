@@ -17,11 +17,12 @@ import { ReportsPage } from './pages/reports/ReportsPage'
 import { SafetyPage } from './pages/safety/SafetyPage'
 import { ToolsPage } from './pages/tools/ToolsPage'
 import { EquipmentUnloadingPage } from './pages/tools/EquipmentUnloadingPage'
+import { FeedbackPage } from './pages/tools/FeedbackPage'
 import { AdminPage } from './pages/admin/AdminPage'
 
 export default function App() {
   const { user, login, logout, setRole } = useAuth()
-  const [showCms, setShowCms] = useState(false)
+  const [showNotes, setShowNotes] = useState(false)
 
   const handleLogin = useCallback(() => {
     login()
@@ -45,8 +46,8 @@ export default function App() {
                   user={user}
                   onLogout={logout}
                   onSetRole={setRole}
-                  showCms={showCms}
-                  onToggleCms={() => setShowCms(!showCms)}
+                  showNotes={showNotes}
+                  onToggleNotes={() => setShowNotes(!showNotes)}
                 />
               }
             >
@@ -57,9 +58,10 @@ export default function App() {
               <Route path="/news" element={<NewsPage />} />
               <Route path="/library" element={<LibraryPage />} />
               <Route path="/reports" element={<ReportsPage />} />
-              <Route path="/safety" element={<SafetyPage />} />
               <Route path="/tools" element={<ToolsPage />} />
               <Route path="/tools/equipment" element={<EquipmentUnloadingPage />} />
+              <Route path="/tools/safety" element={<SafetyPage />} />
+              <Route path="/tools/feedback" element={<FeedbackPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>

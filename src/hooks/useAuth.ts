@@ -2,6 +2,12 @@ import { useState, useCallback } from 'react'
 
 export type UserRole = 'agent_owner' | 'employee' | 'admin'
 
+export const roleLabels: Record<UserRole, string> = {
+  agent_owner: 'Agent (Owner)',
+  employee: 'Agent (Employee)',
+  admin: 'Admin',
+}
+
 export interface AuthUser {
   id: string
   name: string

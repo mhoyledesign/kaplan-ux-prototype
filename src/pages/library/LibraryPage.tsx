@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import { Search, FileText, Play, GraduationCap, Download, ExternalLink } from 'lucide-react'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const categories = ['All', 'Safety', 'Policy', 'Operations', 'Compliance']
 const types = ['All', 'PDF', 'Video', 'Training']
@@ -30,7 +30,7 @@ const typeConfig = {
 }
 
 export function LibraryPage() {
-  const { showCms } = useOutletContext<OutletCtx>()
+  const { showNotes } = useOutletContext<OutletCtx>()
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [type, setType] = useState('All')
@@ -96,7 +96,7 @@ export function LibraryPage() {
       </div>
 
       {/* Grid */}
-      <div className={showCms ? 'cms-indicator' : ''}>
+      <div className={showNotes ? 'notes-indicator' : ''}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((item) => {
             const cfg = typeConfig[item.type as keyof typeof typeConfig]

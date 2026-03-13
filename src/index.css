@@ -135,15 +135,16 @@
   h3 { font-size: 1rem; font-weight: var(--font-weight-semibold); line-height: 1.5; }
 }
 
-/* CMS Indicator */
-.cms-indicator {
+/* Notes Indicator */
+.notes-indicator,
+.notes-indicator-plain {
   position: relative;
   border: 2px dashed var(--brand-primary);
   border-radius: var(--radius-lg);
   padding: 4px;
 }
-.cms-indicator::after {
-  content: 'CMS';
+.notes-indicator::after {
+  content: 'Managed by CMS';
   position: absolute;
   top: -1px;
   right: -1px;

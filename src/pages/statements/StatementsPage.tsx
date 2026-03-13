@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import { FileText, Download, Eye, Printer, X, ChevronDown, ChevronRight, Loader2 } from 'lucide-react'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 interface Statement {
   id: number
@@ -54,7 +54,7 @@ function formatDate(d: string) {
 }
 
 export function StatementsPage() {
-  const { user } = useOutletContext<OutletCtx>()
+  const { showNotes, user } = useOutletContext<OutletCtx>()
   const [filter, setFilter] = useState<Filter>('recent')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [viewingPdf, setViewingPdf] = useState<Statement | null>(null)
@@ -66,12 +66,22 @@ export function StatementsPage() {
         <h1 className="text-2xl font-semibold mb-4">Settlement Statements</h1>
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
           <FileText size={32} className="mx-auto text-amber-600 mb-3" />
-          <h2 className="text-lg font-semibold mb-1">Access Restricted</h2>
-          <p className="text-sm text-muted-foreground">
-            Your account does not have permission to view settlement statements.
-            Contact your agent owner or administrator for access.
+          <h2 className="text-lg font-semibold mb-1">Statement Access Not Enabled</h2>
+          <p className="text-sm text-muted-foreground mb-3">
+            Your account does not currently have permission to view settlement statements.
+            Statement visibility is controlled by a permission setting in Trinium and must be enabled by an administrator.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            If you believe you should have access, contact your agent owner or IT support to update your Trinium permissions.
           </p>
         </div>
+        {showNotes && (
+          <div className="notes-indicator mt-4">
+            <p className="text-xs text-muted-foreground p-2">
+              Statement access is gated by a checkbox in Trinium (per-user setting). The API should validate this permission server-side before returning any statement data — the UI restriction alone is not sufficient for sensitive financial data.
+            </p>
+          </div>
+        )}
       </div>
     )
   }
@@ -124,6 +134,32 @@ export function StatementsPage() {
           </button>
         </div>
       </div>
+
+      {/* Previous Statement */}
+      {allStatements[1] && (
+        <div className="rounded-lg p-4 mb-6 bg-[var(--neutral-grey-4)] border border-border">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <div className="text-xs text-muted-foreground mb-0.5">Previous Statement</div>
+              <div className="text-sm font-medium">
+                {formatDate(allStatements[1].startDate)} — {formatDate(allStatements[1].endDate)}
+              </div>
+              <div className="text-base font-semibold mt-0.5">{allStatements[1].amount}</div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => openPdf(allStatements[1])}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border bg-white hover:bg-muted text-xs font-medium transition-colors cursor-pointer"
+              >
+                <Eye size={14} /> View
+              </button>
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border bg-white hover:bg-muted text-xs font-medium transition-colors cursor-pointer">
+                <Download size={14} /> Download
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Filter bar */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
@@ -266,6 +302,13 @@ export function StatementsPage() {
                   <div className="mt-8 pt-4 border-t border-border text-xs text-muted-foreground text-center">
                     This is a mock PDF preview for demonstration purposes.
                   </div>
+                  {showNotes && (
+                    <div className="notes-indicator-plain mt-4">
+                      <p className="text-xs text-muted-foreground p-2">
+                        Whether this displays as an embedded PDF viewer or native content layout depends on the client's preferred approach.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

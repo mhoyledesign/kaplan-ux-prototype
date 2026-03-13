@@ -6,20 +6,20 @@ import {
 } from 'lucide-react'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const tabs = ['User Management', 'Activity Log']
 
 const mockUsers = [
-  { id: 1, name: 'Robert Mitchell', email: 'rmitchell@example.com', role: 'Agent Owner', terminals: ['CLE-01', 'CLE-02', 'AKR-01'], status: 'Active', lastLogin: '2026-03-04 08:32 AM' },
-  { id: 2, name: 'Sarah Johnson', email: 'sjohnson@example.com', role: 'Employee', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-03 02:15 PM' },
-  { id: 3, name: 'Mike Chen', email: 'mchen@example.com', role: 'Agent Owner', terminals: ['PIT-01'], status: 'Active', lastLogin: '2026-03-04 09:10 AM' },
-  { id: 4, name: 'Linda Torres', email: 'ltorres@example.com', role: 'Agent Owner', terminals: ['COL-01', 'CIN-01'], status: 'Active', lastLogin: '2026-02-28 11:45 AM' },
-  { id: 5, name: 'James Brown', email: 'jbrown@example.com', role: 'Employee', terminals: ['PIT-01'], status: 'Disabled', lastLogin: '2026-01-15 03:20 PM' },
-  { id: 6, name: 'Angela Wright', email: 'awright@example.com', role: 'Agent Owner', terminals: ['IND-01'], status: 'Active', lastLogin: '2026-03-03 07:55 AM' },
-  { id: 7, name: 'Patricia Davis', email: 'pdavis@example.com', role: 'Employee', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-01 10:30 AM' },
-  { id: 8, name: 'Kevin Park', email: 'kpark@example.com', role: 'Agent Owner', terminals: ['TOL-01', 'WHL-01'], status: 'Active', lastLogin: '2026-03-04 06:48 AM' },
-  { id: 9, name: 'Dennis Hall', email: 'dhall@example.com', role: 'Employee', terminals: ['AKR-01'], status: 'Disabled', lastLogin: '2025-12-20 04:10 PM' },
+  { id: 1, name: 'Robert Mitchell', email: 'rmitchell@example.com', role: 'Agent (Owner)', terminals: ['CLE-01', 'CLE-02', 'AKR-01'], status: 'Active', lastLogin: '2026-03-04 08:32 AM' },
+  { id: 2, name: 'Sarah Johnson', email: 'sjohnson@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-03 02:15 PM' },
+  { id: 3, name: 'Mike Chen', email: 'mchen@example.com', role: 'Agent (Owner)', terminals: ['PIT-01'], status: 'Active', lastLogin: '2026-03-04 09:10 AM' },
+  { id: 4, name: 'Linda Torres', email: 'ltorres@example.com', role: 'Agent (Owner)', terminals: ['COL-01', 'CIN-01'], status: 'Active', lastLogin: '2026-02-28 11:45 AM' },
+  { id: 5, name: 'James Brown', email: 'jbrown@example.com', role: 'Agent (Employee)', terminals: ['PIT-01'], status: 'Disabled', lastLogin: '2026-01-15 03:20 PM' },
+  { id: 6, name: 'Angela Wright', email: 'awright@example.com', role: 'Agent (Owner)', terminals: ['IND-01'], status: 'Active', lastLogin: '2026-03-03 07:55 AM' },
+  { id: 7, name: 'Patricia Davis', email: 'pdavis@example.com', role: 'Agent (Employee)', terminals: ['CLE-01'], status: 'Active', lastLogin: '2026-03-01 10:30 AM' },
+  { id: 8, name: 'Kevin Park', email: 'kpark@example.com', role: 'Agent (Owner)', terminals: ['TOL-01', 'WHL-01'], status: 'Active', lastLogin: '2026-03-04 06:48 AM' },
+  { id: 9, name: 'Dennis Hall', email: 'dhall@example.com', role: 'Agent (Employee)', terminals: ['AKR-01'], status: 'Disabled', lastLogin: '2025-12-20 04:10 PM' },
   { id: 10, name: 'JD Morrison', email: 'jd@kaplantruck.com', role: 'Admin', terminals: ['ALL'], status: 'Active', lastLogin: '2026-03-04 09:00 AM' },
 ]
 
@@ -27,7 +27,7 @@ const activityLog = [
   { id: 1, action: 'User created', user: 'Thomas Reed', performedBy: 'JD Morrison', time: '2026-03-04 09:15 AM', type: 'user_created' },
   { id: 2, action: 'Password reset', user: 'Sarah Johnson', performedBy: 'Steve Anderson', time: '2026-03-04 08:45 AM', type: 'password_reset' },
   { id: 3, action: 'User disabled', user: 'Dennis Hall', performedBy: 'JD Morrison', time: '2026-03-03 04:30 PM', type: 'user_disabled' },
-  { id: 4, action: 'Role changed to Agent Owner', user: 'Angela Wright', performedBy: 'JD Morrison', time: '2026-03-03 02:00 PM', type: 'role_changed' },
+  { id: 4, action: 'Role changed to Agent (Owner)', user: 'Angela Wright', performedBy: 'JD Morrison', time: '2026-03-03 02:00 PM', type: 'role_changed' },
   { id: 5, action: 'User created', user: 'Kevin Park', performedBy: 'Steve Anderson', time: '2026-03-02 10:20 AM', type: 'user_created' },
   { id: 6, action: 'Password reset', user: 'Mike Chen', performedBy: 'Adam Petrov', time: '2026-03-01 03:15 PM', type: 'password_reset' },
   { id: 7, action: 'User enabled', user: 'Patricia Davis', performedBy: 'JD Morrison', time: '2026-02-28 11:00 AM', type: 'user_enabled' },
@@ -77,7 +77,7 @@ export function AdminPage() {
       </p>
 
       {/* Status cards */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-2)' }}>
           <div className="text-2xl font-bold" style={{ color: 'var(--brand-primary)' }}>
             {mockUsers.filter(u => u.status === 'Active').length}
@@ -165,7 +165,7 @@ export function AdminPage() {
                           style={
                             u.role === 'Admin'
                               ? { backgroundColor: '#f4ecf7', color: '#6c3483' }
-                              : u.role === 'Agent Owner'
+                              : u.role === 'Agent (Owner)'
                               ? { backgroundColor: 'var(--brand-primary-light)', color: 'var(--brand-primary)' }
                               : { backgroundColor: '#d6eaf8', color: '#1a5276' }
                           }
@@ -250,8 +250,8 @@ export function AdminPage() {
               <div>
                 <label className="block text-sm font-medium mb-1">Role</label>
                 <select className="w-full px-3 py-2 border border-input-border rounded-md bg-input-background text-sm cursor-pointer">
-                  <option>Agent Owner</option>
-                  <option>Employee</option>
+                  <option>Agent (Owner)</option>
+                  <option>Agent (Employee)</option>
                   <option>Admin</option>
                 </select>
               </div>

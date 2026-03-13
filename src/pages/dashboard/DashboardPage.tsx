@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useOutletContext, Link } from 'react-router-dom'
 import {
   FileText, ExternalLink, Monitor, AlertTriangle, Info,
-  CheckCircle2, ChevronRight, Newspaper, Circle, ArrowRight,
+  CheckCircle2, ChevronRight, ChevronDown, Newspaper, Circle, ArrowRight,
   ClipboardCheck
 } from 'lucide-react'
 import { useBrand } from '@/theme/BrandContext'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
+
 
 interface Task {
   id: number
@@ -27,7 +28,7 @@ const tasks: Task[] = [
     desc: 'Your annual DOT compliance review is due by March 15, 2026. Upload required documentation to avoid penalties.',
     urgency: 'high',
     date: 'Due Mar 15',
-    linkTo: '/safety',
+    linkTo: '/tools/safety',
     linkLabel: 'Go to Safety',
   },
   {
@@ -77,13 +78,18 @@ const newsFeed = [
 ]
 
 export function DashboardPage() {
-  const { showCms, user } = useOutletContext<OutletCtx>()
+  const { showNotes, user } = useOutletContext<OutletCtx>()
   const { brand } = useBrand()
   const [completedTasks, setCompletedTasks] = useState<number[]>([])
+  const [showAllTasks, setShowAllTasks] = useState(false)
   const [expandedNews, setExpandedNews] = useState<number | null>(null)
 
-  const pendingTasks = tasks.filter(t => !completedTasks.includes(t.id))
-  const doneTasks = tasks.filter(t => completedTasks.includes(t.id))
+  // Filter out statement-related tasks for users without statement access
+  const visibleTasks = user.canViewStatements
+    ? tasks
+    : tasks.filter(t => t.linkTo !== '/statements')
+  const pendingTasks = visibleTasks.filter(t => !completedTasks.includes(t.id))
+  const doneTasks = visibleTasks.filter(t => completedTasks.includes(t.id))
 
   const handleComplete = (id: number) => {
     setCompletedTasks([...completedTasks, id])
@@ -92,7 +98,7 @@ export function DashboardPage() {
   return (
     <div className="max-w-5xl">
       <h1 className="text-2xl font-semibold mb-1">
-        Welcome to the {brand.shortName} Portal
+        {brand.shortName} Portal Home
       </h1>
       <p className="text-muted-foreground text-sm mb-6">
         Hello, {user.name}. Here's what's happening today.
@@ -100,7 +106,7 @@ export function DashboardPage() {
 
       {/* Action Items / Tasks */}
       {pendingTasks.length > 0 && (
-        <div className="mb-8">
+        <div className={`mb-8 ${showNotes ? 'notes-indicator' : ''}`}>
           <h2 className="text-xs font-semibold tracking-[0.1em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
             <ClipboardCheck size={14} />
             Action Items
@@ -111,66 +117,94 @@ export function DashboardPage() {
               {pendingTasks.length}
             </span>
           </h2>
-          <div className="space-y-2">
-            {pendingTasks.map((task) => {
-              const cfg = urgencyConfig[task.urgency]
-              const UrgencyIcon = cfg.icon
-              return (
-                <div
-                  key={task.id}
-                  className="rounded-lg border p-4 transition-all duration-200"
-                  style={{ backgroundColor: cfg.bg, borderColor: cfg.border }}
-                >
-                  <div className="flex items-start gap-3">
-                    {/* Urgency indicator */}
-                    <div className="shrink-0 mt-0.5">
-                      <UrgencyIcon size={18} style={{ color: cfg.color }} />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                        <span className="text-sm font-semibold">{task.title}</span>
-                        <span
-                          className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
-                          style={{ backgroundColor: cfg.color + '18', color: cfg.color }}
-                        >
-                          {cfg.label}
-                        </span>
+          <div className="relative">
+            <div
+              className="flex flex-col gap-2 overflow-hidden transition-all duration-300"
+              style={!showAllTasks && pendingTasks.length > 2 ? { maxHeight: '18rem' } : undefined}
+            >
+              {pendingTasks.map((task) => {
+                const cfg = urgencyConfig[task.urgency]
+                const UrgencyIcon = cfg.icon
+                return (
+                  <div
+                    key={task.id}
+                    className="rounded-lg border p-4 transition-all duration-200"
+                    style={{ backgroundColor: cfg.bg, borderColor: cfg.border }}
+                  >
+                    <div className="flex items-start gap-3">
+                      {/* Urgency indicator */}
+                      <div className="shrink-0 mt-0.5">
+                        <UrgencyIcon size={18} style={{ color: cfg.color }} />
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{task.desc}</p>
-                      <div className="text-[11px] text-muted-foreground mt-1.5">{task.date}</div>
-                    </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-2 shrink-0">
-                      {task.linkTo && (
-                        <Link
-                          to={task.linkTo}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border bg-white hover:bg-neutral-grey-4 transition-colors cursor-pointer"
-                          style={{ borderColor: cfg.border, color: cfg.color }}
-                        >
-                          {task.linkLabel || 'View'} <ArrowRight size={12} />
-                        </Link>
-                      )}
+                      {/* Content + Actions */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                          <span className="text-sm font-semibold">{task.title}</span>
+                          <span
+                            className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
+                            style={{ backgroundColor: cfg.color + '18', color: cfg.color }}
+                          >
+                            {cfg.label}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{task.desc}</p>
+                        <div className="text-[11px] text-muted-foreground mt-1.5">{task.date}</div>
 
-                      <button
-                        onClick={() => handleComplete(task.id)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border bg-white hover:bg-neutral-grey-4 transition-colors cursor-pointer"
-                        style={{ borderColor: cfg.border }}
-                      >
-                        <CheckCircle2 size={13} className="text-muted-foreground" /> Mark Completed
-                      </button>
+                        {/* Actions — below content, stack vertically on small screens */}
+                        <div className="flex flex-col sm:flex-row gap-2 mt-3">
+                          {task.linkTo && (
+                            <Link
+                              to={task.linkTo}
+                              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border bg-white hover:bg-neutral-grey-4 transition-colors cursor-pointer"
+                              style={{ borderColor: cfg.border, color: cfg.color }}
+                            >
+                              {task.linkLabel || 'View'} <ArrowRight size={12} />
+                            </Link>
+                          )}
+
+                          <button
+                            onClick={() => handleComplete(task.id)}
+                            className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border bg-white hover:bg-neutral-grey-4 transition-colors cursor-pointer"
+                            style={{ borderColor: cfg.border }}
+                          >
+                            <CheckCircle2 size={13} className="text-muted-foreground" /> Mark Completed
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
+
+            {/* Fade overlay when collapsed */}
+            {!showAllTasks && pendingTasks.length > 2 && (
+              <div
+                className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+                style={{ background: 'linear-gradient(to bottom, transparent, var(--color-background))' }}
+              />
+            )}
           </div>
+
+          {/* View all / collapse toggle */}
+          {pendingTasks.length > 2 && (
+            <button
+              onClick={() => setShowAllTasks(!showAllTasks)}
+              className="w-full flex items-center justify-center gap-1.5 mt-2 py-2 text-xs font-medium rounded-lg hover:bg-neutral-grey-4 transition-colors cursor-pointer"
+              style={{ color: 'var(--brand-primary)' }}
+            >
+              {showAllTasks ? 'Show less' : `View all ${pendingTasks.length} action items`}
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-200 ${showAllTasks ? 'rotate-180' : ''}`}
+              />
+            </button>
+          )}
 
           {/* Completed tasks (collapsed) */}
           {doneTasks.length > 0 && (
-            <div className="mt-3 space-y-1.5">
+            <div className="mt-3 flex flex-col gap-1.5">
               {doneTasks.map((task) => (
                 <div
                   key={task.id}
@@ -188,7 +222,7 @@ export function DashboardPage() {
 
       {/* Quick Access */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-        {quickAccess.map((item) => {
+        {quickAccess.filter(item => !('to' in item && item.to === '/statements') || user.canViewStatements).map((item) => {
           const Icon = item.icon
           const inner = (
             <div
@@ -218,7 +252,7 @@ export function DashboardPage() {
       </div>
 
       {/* News Feed Preview */}
-      <div className={showCms ? 'cms-indicator' : ''}>
+      <div className={showNotes ? 'notes-indicator' : ''}>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <Newspaper size={18} />

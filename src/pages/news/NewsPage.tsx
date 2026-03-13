@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import { ChevronDown, ChevronRight, FileText, Download } from 'lucide-react'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const categories = ['All', 'Company News', 'Safety', 'Compliance', 'HR', 'Operations']
 
@@ -19,7 +19,7 @@ const newsItems = [
 ]
 
 export function NewsPage() {
-  const { showCms } = useOutletContext<OutletCtx>()
+  const { showNotes } = useOutletContext<OutletCtx>()
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [expandedId, setExpandedId] = useState<number | null>(null)
@@ -56,7 +56,7 @@ export function NewsPage() {
       </div>
 
       {/* News list */}
-      <div className={showCms ? 'cms-indicator' : ''}>
+      <div className={showNotes ? 'notes-indicator' : ''}>
         <div className="space-y-2">
           {filtered.map((item) => (
             <div

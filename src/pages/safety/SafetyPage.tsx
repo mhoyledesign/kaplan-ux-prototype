@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
-import { Shield, FileText, MapPin, Building2, AlertTriangle, Phone, Download, Search } from 'lucide-react'
+import { useOutletContext, Link } from 'react-router-dom'
+import { Shield, FileText, MapPin, Building2, AlertTriangle, Phone, Download, Search, ArrowLeft } from 'lucide-react'
 import type { AuthUser } from '@/hooks/useAuth'
 
-interface OutletCtx { showCms: boolean; user: AuthUser }
+interface OutletCtx { showNotes: boolean; user: AuthUser }
 
 const tabs = ['Documents', 'Inspection Stations', 'Clinic Locations', 'Accidents & Claims']
 
@@ -37,14 +37,18 @@ const clinics = [
 ]
 
 export function SafetyPage() {
-  const { showCms } = useOutletContext<OutletCtx>()
+  const { showNotes } = useOutletContext<OutletCtx>()
   const [tab, setTab] = useState(tabs[0])
   const [stationSearch, setStationSearch] = useState('')
   const [clinicSearch, setClinicSearch] = useState('')
 
   return (
     <div className="max-w-5xl">
-      <h1 className="text-2xl font-semibold mb-1">Safety</h1>
+      <Link to="/tools" className="flex items-center gap-1.5 text-sm mb-4 hover:underline" style={{ color: 'var(--brand-primary)' }}>
+        <ArrowLeft size={14} /> Back to Tools & Resources
+      </Link>
+
+      <h1 className="text-2xl font-semibold mb-1">Safety Resources</h1>
       <p className="text-sm text-muted-foreground mb-4">
         Safety resources, compliance documents, and approved facilities.
       </p>
@@ -78,7 +82,7 @@ export function SafetyPage() {
 
       {/* Documents */}
       {tab === 'Documents' && (
-        <div className={showCms ? 'cms-indicator' : ''}>
+        <div className={showNotes ? 'notes-indicator' : ''}>
           <div className="space-y-2">
             {safetyDocs.map((doc) => (
               <div

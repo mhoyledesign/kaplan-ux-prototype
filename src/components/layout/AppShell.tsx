@@ -8,12 +8,13 @@ interface AppShellProps {
   user: AuthUser
   onLogout: () => void
   onSetRole: (role: UserRole) => void
-  showCms: boolean
-  onToggleCms: () => void
+  showNotes: boolean
+  onToggleNotes: () => void
 }
 
-export function AppShell({ user, onLogout, onSetRole, showCms, onToggleCms }: AppShellProps) {
+export function AppShell({ user, onLogout, onSetRole, showNotes, onToggleNotes }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -27,23 +28,25 @@ export function AppShell({ user, onLogout, onSetRole, showCms, onToggleCms }: Ap
         user={user}
         onLogout={handleLogout}
         onSetRole={onSetRole}
-        onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
-        showCms={showCms}
-        onToggleCms={onToggleCms}
+        onToggleSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        showNotes={showNotes}
+        onToggleNotes={onToggleNotes}
       />
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         isAdmin={user.role === 'admin'}
+        mobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
       />
       <main
         className={`
           pt-14 min-h-screen transition-all duration-200
-          ${sidebarCollapsed ? 'pl-16' : 'pl-56'}
+          pl-0 ${sidebarCollapsed ? 'md:pl-16' : 'md:pl-56'}
         `}
       >
         <div className="p-6">
-          <Outlet context={{ showCms, user }} />
+          <Outlet context={{ showNotes, user }} />
         </div>
       </main>
     </div>

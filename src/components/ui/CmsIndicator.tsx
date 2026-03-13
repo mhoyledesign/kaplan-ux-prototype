@@ -10,7 +10,7 @@ function CmsIndicator({ show, children }: CmsIndicatorProps) {
     return <>{children}</>
   }
 
-  return <div className="cms-indicator">{children}</div>
+  return <div className="notes-indicator">{children}</div>
 }
 
 export { CmsIndicator }

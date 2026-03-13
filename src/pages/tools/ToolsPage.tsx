@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Truck, ExternalLink, Monitor } from 'lucide-react'
+import { Truck, ExternalLink, Monitor, Shield, MessageSquare } from 'lucide-react'
 
 const tools = [
   {
@@ -7,6 +7,20 @@ const tools = [
     desc: 'Find approved unloading facilities by region and terminal. Includes dock assignments, check-in procedures, and contact information.',
     icon: Truck,
     to: '/tools/equipment',
+    external: false,
+  },
+  {
+    title: 'Safety Resources',
+    desc: 'Safety documents, inspection stations, clinic locations, and accident reporting procedures.',
+    icon: Shield,
+    to: '/tools/safety',
+    external: false,
+  },
+  {
+    title: 'Feedback',
+    desc: 'Submit feature requests, report issues, or send general feedback to the portal team.',
+    icon: MessageSquare,
+    to: '/tools/feedback',
     external: false,
   },
   {
@@ -28,9 +42,9 @@ const tools = [
 export function ToolsPage() {
   return (
     <div className="max-w-3xl">
-      <h1 className="text-2xl font-semibold mb-1">Tools</h1>
+      <h1 className="text-2xl font-semibold mb-1">Tools & Resources</h1>
       <p className="text-sm text-muted-foreground mb-6">
-        Quick access to dispatch, IT support, and operational tools.
+        Quick access to dispatch, IT support, safety resources, and operational tools.
       </p>
 
       <div className="flex flex-col gap-3">
